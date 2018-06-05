@@ -14,7 +14,7 @@ import (
 
 type Job struct {
 	Name    string
-	Inner   cron.Job
+	inner   cron.Job
 	status  uint32
 	Status  string
 	Latency string
@@ -30,7 +30,7 @@ func New(job cron.Job) *Job {
 	}
 	return &Job{
 		Name:  name,
-		Inner: job,
+		inner: job,
 	}
 }
 
@@ -72,7 +72,7 @@ func (j *Job) Run() {
 	defer j.StatusUpdate()
 	defer atomic.StoreUint32(&j.status, 0)
 
-	j.Inner.Run()
+	j.inner.Run()
 
 	end := time.Now()
 	j.Latency = end.Sub(start).String()

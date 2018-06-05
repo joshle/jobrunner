@@ -24,6 +24,18 @@ func Entry(id cron.EntryID) cron.Entry {
 	return MainCron.Entry(id)
 }
 
+// Return detailed a specific job from running
+func EntryStatus(id cron.EntryID) StatusData {
+	v := Entry(id)
+
+	return StatusData{
+		Id:        v.ID,
+		JobRunner: AddJob(v.Job),
+		Next:      v.Next,
+		Prev:      v.Prev,
+	}
+}
+
 func StatusPage() []StatusData {
 
 	ents := MainCron.Entries()
